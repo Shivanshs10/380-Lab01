@@ -80,12 +80,59 @@ public class Application {
   
         
     }
-    public static double factorial(double n) {
-        if (n <= 1) {
-            return 1;
-        } else {
-            return n * factorial(n - 1);
+    public static long factorial(int num) {
+        if (num < 0) {
+            System.out.println("Factorial of negative number is undefined.");
+            return 0;
         }
+        return factorialHelper(num, num);
+    }
+
+    private static long factorialHelper(int originalNum, int num) {
+        if (num <= 1) {
+            return 1;
+        }
+        // Calculate progress and update progress bar
+        int progress = (int) Math.round(((double) (originalNum - num) / originalNum) * 100);
+        System.out.print("\rCalculating factorial: " + progress + "%");
+        return num * factorialHelper(originalNum, num - 1);
+    }
+    
+    public static double power(double base, double exponent) {
+        return Math.pow(base, exponent);
+    }
+
+    // Square root
+    public static double sqrt(double number) {
+        return Math.sqrt(number);
+    }
+
+    // Natural logarithm
+    public static double log(double number) {
+        return Math.log(number);
+    }
+
+    // Base-10 logarithm
+    public static double log10(double number) {
+        return Math.log10(number);
+    }
+
+    // Sine function
+    public static double sin(double angleRadians) {
+    	double angleRadians = Math.toRadian(angleDegrres)
+        return Math.sin(angleRadians);
+    }
+
+    // Cosine function
+    public static double cos(double angleRadians) {
+    	double angleRadians = Math.toRadian(angleDegrres)
+        return Math.cos(angleRadians);
+    }
+
+    // Tangent function
+    public static double tan(double angleRadians) {
+    	double angleRadians = Math.toRadian(angleDegrres)
+        return Math.tan(angleRadians);
     }
 
     // Other Methods' placeholders
