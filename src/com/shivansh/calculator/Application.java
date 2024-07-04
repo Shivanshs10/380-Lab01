@@ -7,7 +7,7 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\nEnter operation (add, subtract, multiply, divide, pow, sqrt, log, log10, sin, cos, tan, factorial) or 'exit' to quit:");
+            System.out.println("\nEnter operation (add, subtract, multiply, divide, pow, sqrt, log, log10, sin, cos, tan, factorial, permutation) or 'exit' to quit:");
             String operation = scanner.next();
 
             if (operation.equalsIgnoreCase("exit")) {
@@ -16,7 +16,7 @@ public class Application {
             }
 
             // For operations requiring two inputs
-            if (!operation.equalsIgnoreCase("sqrt") && !operation.equalsIgnoreCase("log") && !operation.equalsIgnoreCase("log10") && !operation.equalsIgnoreCase("sin") && !operation.equalsIgnoreCase("cos") && !operation.equalsIgnoreCase("tan") && !operation.equalsIgnoreCase("factorial")) {
+            if (operation.equalsIgnoreCase("add") || operation.equalsIgnoreCase("subtract") || operation.equalsIgnoreCase("multiply") || operation.equalsIgnoreCase("divide") || operation.equalsIgnoreCase("pow") || operation.equalsIgnoreCase("permutation")) {
                 System.out.print("Enter first number: ");
                 double num1 = scanner.nextDouble();
                 System.out.print("Enter second number: ");
@@ -37,6 +37,14 @@ public class Application {
                         break;
                     case "pow":
                         System.out.println("Result: " + power(num1, num2));
+                        break;
+                    case "permutation":
+                        int totalElements = (int) num1;
+                        int selectedItems = (int) num2;
+                        if (validatePermutationInputs(totalElements, selectedItems)) {
+                            System.out.println("Result (recursive): " + permutationRecursive(totalElements, selectedItems));
+                            System.out.println("Result (non-recursive): " + permutationNonRecursive(totalElements, selectedItems));
+                        }
                         break;
                     default:
                         System.out.println("Invalid operation.");
@@ -102,7 +110,7 @@ public class Application {
         return a / b;
     }
 
- // Exponentiation
+    // Exponentiation
     public static double power(double base, double exponent) {
         return Math.pow(base, exponent);
     }
@@ -137,7 +145,7 @@ public class Application {
         return Math.tan(Math.toRadians(angleRadians));
     }
 
- // Factorial calculation with progress display
+    // Factorial calculation with progress display
     public static long factorial(int num) {
         if (num < 0) {
             System.out.println("Factorial of negative number is undefined.");
@@ -148,7 +156,7 @@ public class Application {
 
     private static long factorialHelper(int originalNum, int num) {
         if (num <= 1) {
-        	System.out.print("\rCalculating Factorial: 100% ");
+            System.out.print("\rCalculating Factorial: 100% ");
             return 1;
         }
 
@@ -158,5 +166,43 @@ public class Application {
         System.out.print("\rCalculating factorial: " + progressPercent + "%");
 
         return num * factorialHelper(originalNum, num - 1);
+    }
+
+    // Validate inputs for permutation calculation
+    private static boolean validatePermutationInputs(int totalElements, int selectedItems) {
+        if (totalElements < 0) {
+            System.out.println("Total number of elements cannot be negative.");
+            return false;
+        }
+        if (selectedItems < 0 || selectedItems > 100) {
+            System.out.println("Number of selected items must be between 0 and 100.");
+            return false;
+        }
+        if (selectedItems > totalElements) {
+            System.out.println("Number of selected items cannot exceed total number of elements.");
+            return false;
+        }
+        if (totalElements > 100) {
+            System.out.println("Total number of elements cannot exceed 100.");
+            return false;
+        }
+        return true;
+    }
+
+    // Recursive method to calculate permutations
+    public static long permutationRecursive(int n, int r) {
+        if (r == 0) {
+            return 1;
+        }
+        return n * permutationRecursive(n - 1, r - 1);
+    }
+
+    // Non-recursive method to calculate permutations
+    public static long permutationNonRecursive(int n, int r) {
+        long result = 1;
+        for (int i = 0; i < r; i++) {
+            result *= (n - i);
+        }
+        return result;
     }
 }
